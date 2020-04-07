@@ -1,6 +1,5 @@
 package com.example.tema3;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,25 +41,29 @@ public class Fragment1Activity1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment1_activity1,container, false);
+        Log.i(TAG,"Aici");
 
-
-        recyclerView= recyclerView.findViewById(R.id.recycler_view);
+       // recyclerView=findViewById(R.id.recycler_view);
+        recyclerView= (RecyclerView)view.findViewById(R.id.recycler_view);
+        Log.i(TAG,"Aicirecycleridentify");
         //UserAdapter = new UserAdapter(this);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        Log.i(TAG,"Aici1");
         userList=new ArrayList<>();
-        requestQueue= Volley.newRequestQueue(this);
+        requestQueue= Volley.newRequestQueue(getContext());
+        Log.i(TAG,"Aiciparse2");
         parseJSON();
 
         return view;
     }
     private void parseJSON(){
         Log.i(TAG,"AiciparseJSON");
-        String url="https://my-json-server.typicode.com/MoldovanG/JsonServer/users?fbclid=IwAR33HAB2BLUAxddJU5NKerL2RNtz3blrG3EqLglI2BxmbhT4AbHIp9v9TCY";
+        String url="http://www.json-generator.com/api/json/get/bYUllIAgXS?indent=2";
         Log.i(TAG,"Aiciafterurl");
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
+
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -70,7 +73,7 @@ public class Fragment1Activity1 extends Fragment {
                             for(int i=0;i<jsonArray.length();i++)
                             { Log.i(TAG,"Aiciainfor");
                                 JSONObject user=jsonArray.getJSONObject(i);
-                               int id=user.getId("id");
+                                int id=user.getInt("id");
                                 String name=user.getString("name");
                                 String username=user.getString("username");
                                 String email=user.getString("email");

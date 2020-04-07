@@ -9,7 +9,7 @@ public class User {
     private String email;
 
 
-    public int getId() {
+   public int getId() {
         return id;
     }
 
@@ -25,7 +25,7 @@ public class User {
         return email;
     }
 
-    public User(int id, String name, String username, String email)
+    public User(int id,String name, String username, String email)
     {
 
       this.name=name;
