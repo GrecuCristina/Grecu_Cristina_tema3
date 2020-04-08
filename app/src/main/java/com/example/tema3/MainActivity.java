@@ -1,6 +1,10 @@
 package com.example.tema3;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +20,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addFragment1();
 
+        Button b1f1a1=(Button)findViewById(R.id.btnF1A1);
+        Log.i(TAG,"AiciProblema");
+        b1f1a1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity3();
+            }
+        });
+
+
     }
     private void addFragment1(){
         FragmentManager fragmentManager=getSupportFragmentManager();
@@ -26,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
+    }
+    public void openActivity3(){
+
+        Intent intent = new Intent(this,Activity3.class);
+
+        startActivity(intent);
     }
 
 }

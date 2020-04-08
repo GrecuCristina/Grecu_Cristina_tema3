@@ -17,10 +17,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private Context context;
     private ArrayList<User> UserList;
     //private final LayoutInflater layoutInflater;
+    
+    private OnItemClickListener myListener;
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
 
+    public void setOnItemClickListener(OnItemClickListener listener){
+        myListener=listener;
+    }
+    
     public UserAdapter(Fragment1Activity1 fragment1Activity1, ArrayList<User> userList) {
-        this.context=context;
-        this.UserList=UserList;
+        this.context=fragment1Activity1.getContext();
+        this.UserList=userList;
 
     }
 
@@ -31,22 +40,34 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         Log.i(TAG,"Aicioncreate");
         View view= LayoutInflater.from(context).inflate(R.layout.user, parent, false);
         UserViewHolder viewHolder=new UserViewHolder(view);
+        Log.i(TAG,"AicioncreateAdapterviewHolder");
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        Log.i(TAG,"AicionBindViewHolder1");
         User currentUser=UserList.get(position);
-
+        Log.i(TAG,"AicionBindViewHolder2");
         int id=currentUser.getId();
+        Log.i(TAG,"Aici id "+id);
         String name=currentUser.getName();
         String username=currentUser.getUsername();
         String email=currentUser.getEmail();
+        Log.i(TAG,"AicionBindViewHolder3");
 
-        holder.id.setText(id);
         holder.name.setText(name);
+        Log.i(TAG,"AicionBindViewHolderName");
+       
         holder.username.setText(username);
+        Log.i(TAG,"AicionBindViewHolderUsername");
         holder.email.setText(email);
+        Log.i(TAG,"AicionBindViewHolderEmail");
+        Log.i(TAG,"AicionBindViewHolder");
+
+        
+        holder.id.setText(""+id);
+        Log.i(TAG,"AicionBindViewHolderId");
 
 
     }
@@ -54,6 +75,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public int getItemCount() {
         return UserList.size();
+    }
+
+    public void clearList() {
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
@@ -66,10 +90,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         public UserViewHolder(@NonNull View UserView) {
             super(UserView);
-            name=UserView.findViewById(R.id.id_id);
+            id=UserView.findViewById(R.id.id_id);
             name=UserView.findViewById(R.id.id_name);
             username=UserView.findViewById(R.id.id_username);
             email=UserView.findViewById(R.id.id_email);
+            
+            //
+           UserView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   if(myListener!=null){
+                       int position=getAdapterPosition();
+                       if(position!=RecyclerView.NO_POSITION){
+                           myListener.onItemClick(position);
+                       }
+                   }
+               }
+           });
         }
     }
 }
